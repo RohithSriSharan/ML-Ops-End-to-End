@@ -3,29 +3,29 @@ stages:
   data_ingestion:
     cmd: python src/data_ingestion.py
     deps:
-    - path: data/external/IMDB Dataset.csv
+    - path: data/external/IMDB_Dataset.csv
       hash: md5
       md5: 308443a50e5c993e7b8a1cdb95750026
       size: 66212309
     - path: src/data_ingestion.py
       hash: md5
-      md5: e06c2e747d06b8194368436f63b83d7d
+      md5: 9e84dcd98028e86aabf5fe4fa6ce0c64
       size: 888
     outs:
-    - path: data/raw/IMDB Dataset.csv
+    - path: data/raw/IMDB_Dataset.csv
       hash: md5
       md5: 325be553cb5850b6e67a01e716c3b3e8
       size: 66262310
   data_validation:
     cmd: python src/data_validation.py
     deps:
-    - path: data/raw/IMDB Dataset.csv
+    - path: data/raw/IMDB_Dataset.csv
       hash: md5
       md5: 325be553cb5850b6e67a01e716c3b3e8
       size: 66262310
     - path: src/data_validation.py
       hash: md5
-      md5: e6d86ec05bf375dc063c5fa497fb82b0
+      md5: f523f276c00fb8f92381482fb3912f47
       size: 1730
     outs:
     - path: data/interim/IMDB_validated.csv

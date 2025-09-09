@@ -47,7 +47,7 @@ class DataValidation:
 if __name__ == "__main__":
 
     validator = DataValidation(
-        input_path="data/raw/IMDB Dataset.csv",
+        input_path="data/raw/IMDB_Dataset.csv",
         output_path="data/interim/IMDB_validated.csv",
         expected_cols=["review", "sentiment"]
     )

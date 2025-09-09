@@ -24,7 +24,7 @@ class DataIngestion:
 
 if __name__=="__main__":
     ingestion = DataIngestion(
-        input_path="data/external/IMDB Dataset.csv",
-        output_path="data/raw/IMDB Dataset.csv"
+        input_path="data/external/IMDB_Dataset.csv",
+        output_path="data/raw/IMDB_Dataset.csv"
     )
     ingestion.run()

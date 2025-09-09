@@ -3,15 +3,15 @@ stages:
     cmd: python src/data_ingestion.py
     deps:
       - src/data_ingestion.py
-      - data/external/IMDB Dataset.csv     
+      - data/external/IMDB_Dataset.csv     
     outs:
-      - data/raw/IMDB Dataset.csv
+      - data/raw/IMDB_Dataset.csv
 
   data_validation:
     cmd: python src/data_validation.py
     deps:
       - src/data_validation.py
-      - data/raw/IMDB Dataset.csv
+      - data/raw/IMDB_Dataset.csv
     outs:
       - data/interim/IMDB_validated.csv
   data_preprocessing:

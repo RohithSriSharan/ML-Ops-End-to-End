@@ -1,3 +1,6 @@
 2025-09-09 20:18:00,994 - INFO - Reading dataset from data/external/IMDB Dataset.csv
 2025-09-09 20:18:01,585 - INFO - Dataset loaded with shape (50000, 2)
 2025-09-09 20:18:03,154 - INFO - Date saved to data/raw/IMDB Dataset.csv
+2025-09-10 00:17:11,338 - INFO - Reading dataset from data/external/IMDB_Dataset.csv
+2025-09-10 00:17:11,987 - INFO - Dataset loaded with shape (50000, 2)
+2025-09-10 00:17:13,585 - INFO - Date saved to data/raw/IMDB_Dataset.csv

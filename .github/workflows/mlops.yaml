@@ -2,10 +2,9 @@ name: MLOps CI
 
 on:
   push:
-    branches: [ main ]     # run when pushing to main
-  pull_request:            # also run on PRs
+    branches: [ main ]
+  pull_request:
 
-  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,13 +20,22 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install dvc[all] mlflow boto3 scikit-learn pandas
+          pip install dvc[s3] mlflow boto3 scikit-learn pandas
+
+      - name: Configure AWS credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Pull dataset from DVC remote
+        run: dvc pull
 
       - name: Run DVC pipeline
         run: dvc repro
 
       - name: Upload metrics
-        uses: actions/upload-artifact@v4   # ✅ updated to v4
+        uses: actions/upload-artifact@v4
         with:
           name: metrics
           path: metrics.json

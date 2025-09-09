@@ -9,3 +9,6 @@
 2025-09-09 22:25:54,997 - INFO - Fitting TF-IDF on train set...
 2025-09-09 22:26:13,798 - INFO - Transforming test set...
 2025-09-09 22:26:15,917 - INFO - Feature engineering complete. Saved TF-IDF vectors to features/
+2025-09-10 00:17:15,442 - INFO - Reading dataset from data/raw/IMDB_Dataset.csv
+2025-09-10 00:17:16,135 - WARNING - Found 418 duplicated reviews.
+2025-09-10 00:17:17,736 - INFO - Validataion passed. Data saved to data/interim/IMDB_validated.csv

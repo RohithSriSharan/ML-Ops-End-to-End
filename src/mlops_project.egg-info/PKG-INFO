@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: mlops_project
+Version: 0.0.1
+Author: Your Name
+Author-email: youremail@example.com
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: scikit-learn
+Requires-Dist: mlflow
+Requires-Dist: boto3
+Dynamic: author
+Dynamic: author-email
+Dynamic: requires-dist

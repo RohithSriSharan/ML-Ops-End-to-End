@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+xgboost
+lightgbm
+nltk
+seaborn
+matplotlib
+mlflow
+dvc[s3]
+PyYAML
+fastapi
+flask
+wordcloud
+-e .

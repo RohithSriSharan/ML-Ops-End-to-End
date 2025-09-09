@@ -1,0 +1,2 @@
+2025-09-09 21:19:32,909 - INFO - Reading Cleaned data from data/processed/IMDB_clean.csv
+2025-09-09 21:19:34,207 - INFO - Splitting dataset: 80% train, 20% test

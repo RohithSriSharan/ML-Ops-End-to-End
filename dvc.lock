@@ -1,0 +1,170 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: data/external/IMDB Dataset.csv
+      hash: md5
+      md5: 308443a50e5c993e7b8a1cdb95750026
+      size: 66212309
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: e06c2e747d06b8194368436f63b83d7d
+      size: 888
+    outs:
+    - path: data/raw/IMDB Dataset.csv
+      hash: md5
+      md5: 325be553cb5850b6e67a01e716c3b3e8
+      size: 66262310
+  data_validation:
+    cmd: python src/data_validation.py
+    deps:
+    - path: data/raw/IMDB Dataset.csv
+      hash: md5
+      md5: 325be553cb5850b6e67a01e716c3b3e8
+      size: 66262310
+    - path: src/data_validation.py
+      hash: md5
+      md5: e6d86ec05bf375dc063c5fa497fb82b0
+      size: 1730
+    outs:
+    - path: data/interim/IMDB_validated.csv
+      hash: md5
+      md5: 325be553cb5850b6e67a01e716c3b3e8
+      size: 66262310
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/interim/IMDB_validated.csv
+      hash: md5
+      md5: 325be553cb5850b6e67a01e716c3b3e8
+      size: 66262310
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 160118a23da9d82b7c1db94a44b8ac85
+      size: 2010
+    outs:
+    - path: data/processed/IMDB_clean.csv
+      hash: md5
+      md5: 3996a2be9e33b7a806e823850b79a3cb
+      size: 128365711
+  data_split:
+    cmd: python src/data_split.py
+    deps:
+    - path: data/processed/IMDB_clean.csv
+      hash: md5
+      md5: 3996a2be9e33b7a806e823850b79a3cb
+      size: 128365711
+    - path: src/data_split.py
+      hash: md5
+      md5: e67615afa5ead9445c3719d4ccf85fb0
+      size: 1572
+    params:
+      params.yaml:
+        split.random_state: 42
+        split.test_size: 0.2
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 97819f26cc5c1c32b0d9a71fd38c3ee8
+      size: 25602037
+    - path: data/processed/train.csv
+      hash: md5
+      md5: e085f66bdf3cbd616c68df3ff574a73b
+      size: 102763732
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 97819f26cc5c1c32b0d9a71fd38c3ee8
+      size: 25602037
+    - path: data/processed/train.csv
+      hash: md5
+      md5: e085f66bdf3cbd616c68df3ff574a73b
+      size: 102763732
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: aa77e1b7cc47622c1d5fe8c518f1bf6a
+      size: 2766
+    params:
+      params.yaml:
+        features.max_df: 0.95
+        features.max_features: 10000
+        features.min_df: 5
+        features.ngram_range:
+        - 1
+        - 2
+    outs:
+    - path: features/X_test.pkl
+      hash: md5
+      md5: bdde9d65dc2dc64abfbb3cd24eedc146
+      size: 9630086
+    - path: features/X_train.pkl
+      hash: md5
+      md5: 32f7044bda4d80134d7c940294679edd
+      size: 38774340
+    - path: features/tfidf.pkl
+      hash: md5
+      md5: f0998bb23fa7fca4d3aca8ba3cb0c3a6
+      size: 377191
+    - path: features/y_test.pkl
+      hash: md5
+      md5: 0cb3c1afc8ceacbe3560bcdb64faa3ec
+      size: 79967
+    - path: features/y_train.pkl
+      hash: md5
+      md5: fafaf7bbecf4c506cb196b8123c87e5e
+      size: 317951
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - path: features/X_train.pkl
+      hash: md5
+      md5: 32f7044bda4d80134d7c940294679edd
+      size: 38774340
+    - path: features/y_train.pkl
+      hash: md5
+      md5: fafaf7bbecf4c506cb196b8123c87e5e
+      size: 317951
+    - path: src/model_building.py
+      hash: md5
+      md5: c41c1870476c62c219692d7097a44443
+      size: 2991
+    params:
+      params.yaml:
+        train.C: 1.0
+        train.max_iter: 1000
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 28c9d4a9b1c3512729951aa100b69a81
+      size: 80734
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: features/X_test.pkl
+      hash: md5
+      md5: bdde9d65dc2dc64abfbb3cd24eedc146
+      size: 9630086
+    - path: features/y_test.pkl
+      hash: md5
+      md5: 0cb3c1afc8ceacbe3560bcdb64faa3ec
+      size: 79967
+    - path: models/model.pkl
+      hash: md5
+      md5: 28c9d4a9b1c3512729951aa100b69a81
+      size: 80734
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: af98ab2e7b67e2e4dbfad37a89f52ac4
+      size: 1991
+    outs:
+    - path: classification_report.txt
+      hash: md5
+      md5: 32c8b52c944d3190250c953721b5a0e5
+      size: 334
+    - path: metrics.json
+      hash: md5
+      md5: 0afc57add8d372402f3559090f1d201a
+      size: 77

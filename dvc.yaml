@@ -1,0 +1,76 @@
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+      - src/data_ingestion.py
+      - data/external/IMDB Dataset.csv     
+    outs:
+      - data/raw/IMDB Dataset.csv
+
+  data_validation:
+    cmd: python src/data_validation.py
+    deps:
+      - src/data_validation.py
+      - data/raw/IMDB Dataset.csv
+    outs:
+      - data/interim/IMDB_validated.csv
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+      - src/data_preprocessing.py
+      - data/interim/IMDB_validated.csv
+    outs:
+      - data/processed/IMDB_clean.csv
+
+  data_split:
+    cmd: python src/data_split.py
+    deps:
+      - src/data_split.py
+      - data/processed/IMDB_clean.csv
+    params:
+      - split.test_size
+      - split.random_state
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+      - src/feature_engineering.py
+      - data/processed/train.csv
+      - data/processed/test.csv
+    params:
+      - features.max_features
+      - features.ngram_range
+      - features.max_df
+      - features.min_df
+    outs:
+      - features/X_train.pkl
+      - features/y_train.pkl
+      - features/X_test.pkl
+      - features/y_test.pkl
+      - features/tfidf.pkl
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+      - src/model_building.py
+      - features/X_train.pkl
+      - features/y_train.pkl
+    params:
+      - train.max_iter
+      - train.C
+    outs:
+      - models/model.pkl
+
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+      - src/model_evaluation.py
+      - models/model.pkl
+      - features/X_test.pkl
+      - features/y_test.pkl
+    metrics:
+      - metrics.json
+    outs:
+      - classification_report.txt

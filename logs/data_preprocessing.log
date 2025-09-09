@@ -1,0 +1,7 @@
+2025-09-09 20:45:07,887 - INFO - Reading dataset from data/interim/IMDB_validated.csv
+2025-09-09 20:45:08,555 - INFO - Handling nulls and duplicates
+2025-09-09 20:45:08,744 - INFO - Duplicated Rows before dropping: 418
+2025-09-09 20:45:09,046 - INFO - Duplicated Rows after dropping: 0
+2025-09-09 20:45:09,046 - INFO - Cleaning Text
+2025-09-09 20:45:16,882 - INFO - Encoding sentiment labels...
+2025-09-09 20:45:19,787 - INFO - Preprocessing complete. Data saved to data/processed/IMDB_clean.csv
